@@ -34,7 +34,8 @@ $rsType = $queryType->fetchAll();
                                             <select name="ref_type_id" class="form-control" required>
                                                 <option value="">-- เลือกข้อมูล --</option>
                                                 <?php foreach($rsType as $row){ ?>
-                                                <option value="<?php echo $row['type_id']; ?>">-- <?php echo $row['type_name']; ?> --</option>
+                                                <option value="<?php echo $row['type_id']; ?>">--
+                                                    <?php echo $row['type_name']; ?> --</option>
                                                 <?php } ?>
                                             </select>
                                         </div>
@@ -43,7 +44,8 @@ $rsType = $queryType->fetchAll();
                                     <div class="form-group row">
                                         <label class="col-sm-2">ชื่อสินค้า</label>
                                         <div class="col-sm-7">
-                                            <input type="text" name="product_name" class="form-control" required placeholder="ชื่อสินค้า">
+                                            <input type="text" name="product_name" class="form-control" required
+                                                placeholder="ชื่อสินค้า">
                                         </div>
                                     </div>
 
@@ -58,20 +60,23 @@ $rsType = $queryType->fetchAll();
                                     <div class="form-group row">
                                         <label class="col-sm-2">จำนวนสินค้า</label>
                                         <div class="col-sm-4">
-                                            <input type="number" name="product_qty" class="form-control" value="0" min="0" max="999">
+                                            <input type="number" name="product_qty" class="form-control" value="0"
+                                                min="0" max="999">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2">ราคาทุน</label>
                                         <div class="col-sm-4">
-                                            <input type="number" name="cost_price" class="form-control" value="0" min="0" max="99999">
+                                            <input type="number" name="cost_price" class="form-control" value="0"
+                                                min="0" max="99999">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label class="col-sm-2">ราคาสินค้า</label>
                                         <div class="col-sm-4">
-                                            <input type="number" name="product_price" class="form-control" value="0" min="0" max="99999">
+                                            <input type="number" name="product_price" class="form-control" value="0"
+                                                min="0" max="99999">
                                         </div>
                                     </div>
 
@@ -80,8 +85,10 @@ $rsType = $queryType->fetchAll();
                                         <div class="col-sm-4">
                                             <div class="input-group">
                                                 <div class="custom-file">
-                                                    <input type="file" name="product_image" class="custom-file-input" id="exampleInputFile" accept="image/*">
-                                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                                    <input type="file" name="product_image" class="custom-file-input"
+                                                        id="exampleInputFile" accept="image/*">
+                                                    <label class="custom-file-label" for="exampleInputFile">Choose
+                                                        file</label>
                                                 </div>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">Upload</span>
@@ -115,6 +122,10 @@ $rsType = $queryType->fetchAll();
 <?php 
 // เช็ค input ที่ส่งมาจากฟอร์ม
 if(isset($_POST['product_name']) && isset($_POST['ref_type_id']) && isset($_POST['product_price']) && isset($_POST['cost_price'])) {
+    
+    //trigger exception in a "try" block
+    try {
+        
     // ประกาศตัวแปรรับค่าจากฟอร์ม
     $ref_type_id = $_POST['ref_type_id'];
     $product_name = $_POST['product_name'];
@@ -180,18 +191,7 @@ if(isset($_POST['product_name']) && isset($_POST['ref_type_id']) && isset($_POST
                     });
                     }, 1000);
                 </script>';
-            } else {
-                echo '<script>
-                    setTimeout(function() {
-                    swal({
-                        title: "เกิดข้อผิดพลาด",
-                        type: "error"
-                    }, function() {
-                        window.location = "product.php";
-                    });
-                    }, 1000);
-                </script>';
-            }
+            } //if
         } else {
             echo '<script>
                 setTimeout(function() {
@@ -203,7 +203,22 @@ if(isset($_POST['product_name']) && isset($_POST['ref_type_id']) && isset($_POST
                 });
                 }, 1000);
             </script>';
-        }
-    }
-}
+        } //else เช็ตสกุลไฟล์
+    }//if upload
+        } //try
+        //catch exception
+        catch(Exception $e) {
+            //echo 'Message: ' .$e->getMessage();
+            echo '<script>
+                setTimeout(function() {
+                swal({
+                    title: "เกิดข้อผิดพลาด",
+                    type: "error"
+                }, function() {
+                    window.location = "product.php"; //หน้าที่ต้องการให้กระโดดไป
+                });
+                }, 1000);
+            </script>';
+        } //catch
+        } //isset
 ?>

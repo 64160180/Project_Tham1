@@ -103,7 +103,7 @@
                      }else{
                         //echo 'ไม่มี type_name ซ้ำ';
                          //sql insert
-                    $stmtInserttype = $condb->prepare("INSERT INTO tbl_type 
+                    $stmtInserttype = $condb->prepare("INSERT INTO tbl_type
                     (type_name)
                     VALUES 
                     (:type_name)
@@ -130,7 +130,8 @@
                     } //try
                     //catch exception
                     catch(Exception $e) {
-                        //echo 'Message: ' .$e->getMessage();
+                        // echo 'Message: ' .$e->getMessage();
+                        // exit;
                         echo '<script>
                              setTimeout(function() {
                               swal({

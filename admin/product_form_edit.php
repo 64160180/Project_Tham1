@@ -147,6 +147,10 @@ $rsType = $queryType->fetchAll();
 <?php 
 // เช็ค input ที่ส่งมาจากฟอร์ม
 if(isset($_POST['product_name']) && isset($_POST['ref_type_id']) && isset($_POST['product_price']) && isset($_POST['cost_price'])) {
+
+    //trigger exception in a "try" block
+    try {
+
     // ประกาศตัวแปรรับค่าจากฟอร์ม
     $ref_type_id = $_POST['ref_type_id'];
     $product_name = $_POST['product_name'];
@@ -186,18 +190,8 @@ if(isset($_POST['product_name']) && isset($_POST['ref_type_id']) && isset($_POST
                 });
                 }, 1000);
             </script>';
-        } else {
-            echo '<script>
-                setTimeout(function() {
-                swal({
-                    title: "เกิดข้อผิดพลาด",
-                    type: "error"
-                }, function() {
-                    window.location = "product.php";
-                });
-                }, 1000);
-            </script>';
-        }
+        } //if
+        
     } else {
         // มีการอัพโหลดไฟล์
         $date1 = date("Ymd_His");
@@ -241,18 +235,8 @@ if(isset($_POST['product_name']) && isset($_POST['ref_type_id']) && isset($_POST
                     });
                     }, 1000);
                 </script>';
-            } else {
-                echo '<script>
-                    setTimeout(function() {
-                    swal({
-                        title: "เกิดข้อผิดพลาด",
-                        type: "error"
-                    }, function() {
-                        window.location = "product.php";
-                    });
-                    }, 1000);
-                </script>';
-            }
+            } //if
+            
         } else {
             echo '<script>
                 setTimeout(function() {
@@ -264,7 +248,22 @@ if(isset($_POST['product_name']) && isset($_POST['ref_type_id']) && isset($_POST
                 });
                 }, 1000);
             </script>';
-        }
-    }
-}
+        } //eles upload file
+         } //eles not upload file
+        } //try
+        //catch exception
+        catch(Exception $e) {
+            //echo 'Message: ' .$e->getMessage();
+            echo '<script>
+                setTimeout(function() {
+                swal({
+                    title: "เกิดข้อผิดพลาด",
+                    type: "error"
+                }, function() {
+                    window.location = "product.php"; //หน้าที่ต้องการให้กระโดดไป
+                });
+                }, 1000);
+            </script>';
+        } //catch
+    } //isset
 ?>

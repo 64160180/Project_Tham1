@@ -1,6 +1,9 @@
 <?php 
 if(isset($_GET['id']) && $_GET['act']=='delete'){
 
+    //trigger exception in a "try" block
+    try {
+
     $id = $_GET['id'];
     //echo $id;
 
@@ -43,7 +46,6 @@ if($stmtDelProduct->rowCount() ==1){
     //ลบไฟล์ภาพ
     unlink('../assets/product_img/'.$row['product_image']);
 
-
     echo '<script>
          setTimeout(function() {
           swal({
@@ -55,8 +57,14 @@ if($stmtDelProduct->rowCount() ==1){
         }, 1000);
     </script>';
     // exit();
-}else{
-   echo '<script>
+} //if
+    } //row count
+    
+} //try
+//catch exception
+catch(Exception $e) {
+    //echo 'Message: ' .$e->getMessage();
+    echo '<script>
          setTimeout(function() {
           swal({
               title: "เกิดข้อผิดพลาด",
@@ -66,10 +74,7 @@ if($stmtDelProduct->rowCount() ==1){
           });
         }, 1000);
     </script>';
-
-    } //sweet alert
-        
-    } //row count
+  } //catch
     
 } //isset
 ?>

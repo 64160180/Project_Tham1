@@ -77,6 +77,12 @@ if (session_status() === PHP_SESSION_NONE) {
                         <p>รถเข็น</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="order.php" class="nav-link">
+                        <i class="nav-icon fas fa-edit"></i>
+                        <p>ประวัติการนำออกสินค้า</p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
